@@ -1,0 +1,162 @@
+<html><head><base href="/" />
+    <meta charset="UTF-8">
+    <title>Notícias de IA em Português</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #00b4d8;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #2d2d2d;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th {
+            background: #00b4d8;
+            color: #1a1a1a;
+            padding: 15px;
+            text-align: left;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #404040;
+            color: #e0e0e0;
+        }
+        tr:hover {
+            background: #363636;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2em;
+            color: #888;
+        }
+        .update-time {
+            text-align: right;
+            color: #888;
+            margin-top: 10px;
+        }
+        a {
+            color: #00b4d8;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🤖 Notícias de Inteligência Artificial - 24H</h1>
+            <table id="newsTable">
+                <thead>
+                    <tr>
+                        <th>Manchete</th>
+                        <th>Fonte</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody id="newsBody">
+                    <tr>
+                        <td colspan="3" class="loading">Carregando notícias...</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="update-time" id="updateTime"></div>
+        </div>
+    
+    <script>
+    async function getAINews() {
+        try {
+            const response = await fetch('/api/ai_completion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt: `Generate a list of 10 recent AI news in Portuguese from the last 24 hours.
+                    Format the response as JSON with title, source, and timestamp.
+                    
+                    <typescript-interface>
+                    interface NewsItem {
+                        title: string;
+                        source: string;
+                        timestamp: string;
+                    }
+                    interface Response {
+                        news: NewsItem[];
+                    }
+                    </typescript-interface>
+                    
+                    <example>
+                    {
+                        "news": [
+                            {
+                                "title": "Nova IA da Google promete revolucionar busca na internet",
+                                "source": "TechMundo",
+                                "timestamp": "2024-01-20 14:30"
+                            }
+                        ]
+                    }
+                    </example>`,
+                    data: "Latest Portuguese AI news, return 10 items"
+                }),
+            });
+            const data = await response.json();
+            return data.news;
+        } catch (error) {
+            console.error('Error fetching news:', error);
+            return [];
+        }
+    }
+    
+    function updateTable(news) {
+        const tableBody = document.getElementById('newsBody');
+        tableBody.innerHTML = '';
+        
+        news.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.title}</td>
+                <td>${item.source}</td>
+                <td>${item.timestamp}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+    
+    function updateTimestamp() {
+        const now = new Date();
+        document.getElementById('updateTime').textContent = 
+            `Última atualização: ${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR')}`;
+    }
+    
+    async function init() {
+        const news = await getAINews();
+        updateTable(news);
+        updateTimestamp();
+    }
+    
+    // Initial load
+    init();
+    
+    // Refresh every 30 minutes
+    setInterval(init, 30 * 60 * 1000);
+    </script>
+    </body></html>
