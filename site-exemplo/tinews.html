@@ -1,141 +1,27 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <base href="/" />
     <meta charset="UTF-8">
-    <title>Notícias de IA em Português</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: #1a1a1a;
-            color: #e0e0e0;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h1 {
-            color: #00b4d8;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #2d2d2d;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        th {
-            background: #00b4d8;
-            color: #1a1a1a;
-            padding: 15px;
-            text-align: left;
-        }
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #404040;
-            color: #e0e0e0;
-        }
-        tr:hover {
-            background: #363636;
-        }
-        .loading {
-            text-align: center;
-            padding: 20px;
-            font-size: 1.2em;
-            color: #888;
-        }
-        .update-time {
-            text-align: right;
-            color: #888;
-            margin-top: 10px;
-        }
-        a {
-            color: #00b4d8;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🤖 Notícias de Inteligência Artificial - 24H</h1>
-        <table id="newsTable">
-            <thead>
-                <tr>
-                    <th>Manchete</th>
-                    <th>Fonte</th>
-                    <th>Data</th>
-                </tr>
-            </thead>
-            <tbody id="newsBody">
-                <tr>
-                    <td colspan="3" class="loading">Carregando notícias...</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="update-time" id="updateTime"></div>
-    </div>
-
-    <script>
-        async function getAINews() {
-            try {
-                // Usando um arquivo JSON local para mockar as notícias
-                const response = await fetch('news.json'); // Adicione o arquivo 'news.json' no mesmo diretório
-                const data = await response.json();
-                return data.news;
-            } catch (error) {
-                console.error('Erro ao carregar notícias:', error);
-                return [];
-            }
-        }
-
-        function updateTable(news) {
-            const tableBody = document.getElementById('newsBody');
-            tableBody.innerHTML = '';
-
-            if (news.length === 0) {
-                tableBody.innerHTML = `
-                    <tr>
-                        <td colspan="3" class="loading">Nenhuma notícia disponível.</td>
-                    </tr>`;
-                return;
-            }
-
-            news.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.title}</td>
-                    <td>${item.source}</td>
-                    <td>${item.timestamp}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-
-        function updateTimestamp() {
-            const now = new Date();
-            document.getElementById('updateTime').textContent = 
-                `Última atualização: ${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR')}`;
-        }
-
-        async function init() {
-            const news = await getAINews();
-            updateTable(news);
-            updateTimestamp();
-        }
-
-        // Inicializa ao carregar a página
-        init();
-
-        // Atualiza a cada 30 minutos
-        setInterval(init, 30 * 60 * 1000);
-    </script>
+    <main>
+        <hr>
+        <h1>NOTÍCIAS EM TECNOLOGIA</h1>
+        <h2>GADGETS:</h2>
+        <ul>
+            <li><a href="https://ws-tms.lincros.com/default/rastreio/mercadoria/rastreioCliente.xhtml?tokenRastreio=92fc975105432451d6e9f6ff333531d8b2ad98e4
+                " target="_blank" rel="next">HTML5</a></li>
+            
+            </ul>  
+    
+        
+        <
+    <hr>
+    <a href="index.html" target="_blank" rel="prev">Início</a></li>
+    </main>
 </body>
 </html>
